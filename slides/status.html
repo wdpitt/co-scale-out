@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — Where We Stand</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .4s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:16px}
+h2{font-size:2.2rem;font-weight:900;letter-spacing:-.025em;line-height:1.15;margin-bottom:36px}
+.stages{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;align-items:center;gap:0;margin-bottom:32px}
+.connector{display:flex;flex-direction:column;align-items:center;gap:4px;align-self:center;margin-bottom:60px}
+.conn-line{width:2px;height:36px;border-radius:2px}
+.conn-arrow{font-size:.9rem}
+.conn-done .conn-line{background:rgba(0,191,179,.4)}
+.conn-done .conn-arrow{color:rgba(0,191,179,.5)}
+.conn-pending .conn-line{background:rgba(255,255,255,.1)}
+.conn-pending .conn-arrow{color:rgba(255,255,255,.15)}
+.stage{border-radius:14px;padding:28px 26px;position:relative}
+.stage-done{background:rgba(0,191,179,.07);border:1px solid rgba(0,191,179,.3)}
+.stage-active{background:rgba(255,165,0,.07);border:2px solid rgba(255,165,0,.4);box-shadow:0 0 32px rgba(255,165,0,.08)}
+.stage-pending{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)}
+.stage-badge{display:inline-flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.badge-done{background:rgba(0,191,179,.15);color:#00BFB3;border:1px solid rgba(0,191,179,.3)}
+.badge-active{background:rgba(255,165,0,.15);color:rgba(255,200,60,1);border:1px solid rgba(255,165,0,.35)}
+.badge-pending{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.08)}
+.stage-title{font-size:1.15rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
+.stage-done .stage-title{color:#fff}
+.stage-active .stage-title{color:#fff}
+.stage-pending .stage-title{color:rgba(255,255,255,.45)}
+.stage-detail{font-size:.82rem;font-weight:300;line-height:1.5}
+.stage-done .stage-detail{color:rgba(255,255,255,.55)}
+.stage-active .stage-detail{color:rgba(255,255,255,.65)}
+.stage-pending .stage-detail{color:rgba(255,255,255,.3)}
+.stage-items{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.stage-item{display:flex;gap:8px;align-items:center;font-size:.78rem;font-weight:400}
+.stage-item-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.done-dot{background:#00BFB3}
+.active-dot{background:rgba(255,180,50,.9)}
+.pending-dot{background:rgba(255,255,255,.15)}
+.stage-done .stage-item{color:rgba(255,255,255,.6)}
+.stage-active .stage-item{color:rgba(255,255,255,.7)}
+.stage-pending .stage-item{color:rgba(255,255,255,.25)}
+.bottom-note{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 20px;font-size:.82rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1.5}
+.bottom-note strong{color:rgba(255,200,60,.8)}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="eyebrow f1">Deployment Status</div>
+<h2 class="f1">One action stands between<br>today and 40TB/day.</h2>
+<div class="stages f2">
+  <!-- Stage 1: Done -->
+  <div class="stage stage-done">
+    <div class="stage-badge badge-done">✓ &nbsp;Complete</div>
+    <div class="stage-title">Elastic Licenses</div>
+    <div class="stage-detail">Additional ERUs purchased and active in the Elastic licensing portal.</div>
+    <div class="stage-items">
+      <div class="stage-item"><div class="stage-item-dot done-dot"></div><span>72 → 127 ERUs</span></div>
+      <div class="stage-item"><div class="stage-item-dot done-dot"></div><span>176% license increase</span></div>
+      <div class="stage-item"><div class="stage-item-dot done-dot"></div><span>Capacity rights secured</span></div>
+    </div>
+  </div>
+  <!-- Connector 1→2 -->
+  <div class="connector">
+    <div class="conn-line conn-done"></div>
+    <div class="conn-arrow conn-done">→</div>
+  </div>
+  <!-- Stage 2: Active / Next -->
+  <div class="stage stage-active">
+    <div class="stage-badge badge-active">⚡ &nbsp;Next Action</div>
+    <div class="stage-title">EC2 Allocator Instances</div>
+    <div class="stage-detail">Provision 15 new EC2 instances in AWS to serve as ECE Allocators.</div>
+    <div class="stage-items">
+      <div class="stage-item"><div class="stage-item-dot active-dot"></div><span>+6 i3.8xlarge (Hot tier)</span></div>
+      <div class="stage-item"><div class="stage-item-dot active-dot"></div><span>+3 i3en.6xlarge (Cold tier)</span></div>
+      <div class="stage-item"><div class="stage-item-dot active-dot"></div><span>+3 i3en.2xlarge + +3 m5d.xlarge</span></div>
+    </div>
+  </div>
+  <!-- Connector 2→3 -->
+  <div class="connector">
+    <div class="conn-line conn-pending"></div>
+    <div class="conn-arrow conn-pending">→</div>
+  </div>
+  <!-- Stage 3: Pending -->
+  <div class="stage stage-pending">
+    <div class="stage-badge badge-pending">○ &nbsp;Pending</div>
+    <div class="stage-title">ECE Cluster Expansion</div>
+    <div class="stage-detail">Add allocators to ECE, expand Elasticsearch cluster nodes, validate 40TB/day throughput.</div>
+    <div class="stage-items">
+      <div class="stage-item"><div class="stage-item-dot pending-dot"></div><span>Register allocators in ECE</span></div>
+      <div class="stage-item"><div class="stage-item-dot pending-dot"></div><span>Scale clusters via ECE console</span></div>
+      <div class="stage-item"><div class="stage-item-dot pending-dot"></div><span>Full ingest capacity online</span></div>
+    </div>
+  </div>
+</div>
+<div class="bottom-note f3">
+  <strong>The licenses are not the bottleneck.</strong> &nbsp;The additional ERUs are purchased and idle — they cannot be utilised until the underlying EC2 Allocator instances exist for ECE to deploy Elasticsearch nodes onto. Provisioning those instances is the critical path.
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

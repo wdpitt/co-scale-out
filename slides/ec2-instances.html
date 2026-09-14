@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — EC2 Instances Needed</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 80px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .4s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:12px}
+h2{font-size:1.9rem;font-weight:900;letter-spacing:-.025em;line-height:1.2;margin-bottom:6px}
+.subtitle{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.45);margin-bottom:22px}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid rgba(255,255,255,.1)}
+thead th{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:0 14px 10px;text-align:left}
+thead th:last-child{text-align:right}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.05)}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody td{padding:13px 14px;font-size:.88rem;vertical-align:middle}
+.tier-badge{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:5px;padding:3px 9px}
+.tier-hot{background:rgba(255,140,0,.12);color:rgba(255,165,0,.9)}
+.tier-cold{background:rgba(30,144,255,.12);color:rgba(100,180,255,.9)}
+.tier-frozen{background:rgba(0,191,179,.1);color:#00BFB3}
+.tier-coord{background:rgba(148,103,189,.12);color:rgba(180,140,220,.9)}
+.instance-name{font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff;font-size:.88rem}
+.count{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.05rem}
+.count-add{color:#00BFB3}
+.spec{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:rgba(255,255,255,.5)}
+.spec span{color:rgba(255,255,255,.8)}
+.nodes{font-size:.82rem;color:rgba(255,255,255,.5)}
+.nodes strong{color:rgba(255,255,255,.8);font-weight:700}
+.purpose{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.55)}
+.total-row{background:rgba(0,191,179,.05);border-top:1px solid rgba(0,191,179,.2) !important}
+.total-row td{padding:14px 14px;font-weight:700}
+.total-label{font-size:.9rem;color:#fff}
+.total-count{font-family:'JetBrains Mono',monospace;font-size:1.4rem;color:#00BFB3}
+.total-spec{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:rgba(0,191,179,.7)}
+.total-nodes{font-size:.82rem;color:rgba(255,255,255,.55)}
+.ece-note{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:12px 18px;margin-top:14px;font-size:.78rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.5}
+.ece-note strong{color:rgba(255,255,255,.7);font-weight:700}
+.ece-icon{font-size:1.1rem;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="eyebrow f1">EC2 Allocator Instances · What to Provision</div>
+<h2 class="f1">15 new EC2 instances unlock the purchased ERUs.</h2>
+<p class="subtitle f1">Each instance becomes an ECE Allocator — the host that ECE schedules Elasticsearch nodes onto. Add these to AWS, register in ECE, and the cluster scales automatically.</p>
+<table class="f2">
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Instance Type</th>
+      <th>Qty to Add</th>
+      <th>vCPU</th>
+      <th>RAM</th>
+      <th>NVMe Storage</th>
+      <th>Elastic Nodes Enabled</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tier-badge tier-hot">Hot</span></td>
+      <td><span class="instance-name">i3.8xlarge</span></td>
+      <td><span class="count count-add">+6</span></td>
+      <td><span class="spec"><span>32</span> vCPU</span></td>
+      <td><span class="spec"><span>244 GB</span></span></td>
+      <td><span class="spec"><span>7.6 TB</span> NVMe</span></td>
+      <td><span class="nodes"><strong>36 → 48</strong> hot nodes</span></td>
+      <td><span class="purpose">High-throughput ingest &amp; active search</span></td>
+    </tr>
+    <tr>
+      <td><span class="tier-badge tier-cold">Cold</span></td>
+      <td><span class="instance-name">i3en.6xlarge</span></td>
+      <td><span class="count count-add">+3</span></td>
+      <td><span class="spec"><span>24</span> vCPU</span></td>
+      <td><span class="spec"><span>192 GB</span></span></td>
+      <td><span class="spec"><span>15 TB</span> NVMe</span></td>
+      <td><span class="nodes"><strong>24 → 30</strong> cold nodes</span></td>
+      <td><span class="purpose">Dense read-optimised retention storage</span></td>
+    </tr>
+    <tr>
+      <td><span class="tier-badge tier-frozen">Frozen</span></td>
+      <td><span class="instance-name">i3en.2xlarge</span></td>
+      <td><span class="count count-add">+3</span></td>
+      <td><span class="spec"><span>8</span> vCPU</span></td>
+      <td><span class="spec"><span>64 GB</span></span></td>
+      <td><span class="spec"><span>5 TB</span> NVMe</span></td>
+      <td><span class="nodes"><strong>3 → 6</strong> frozen nodes</span></td>
+      <td><span class="purpose">S3-backed long-term archive cache</span></td>
+    </tr>
+    <tr>
+      <td><span class="tier-badge tier-coord">Kibana / Proxy</span></td>
+      <td><span class="instance-name">m5d.xlarge</span></td>
+      <td><span class="count count-add">+3</span></td>
+      <td><span class="spec"><span>4</span> vCPU</span></td>
+      <td><span class="spec"><span>16 GB</span></span></td>
+      <td><span class="spec"><span>150 GB</span> NVMe</span></td>
+      <td><span class="nodes"><strong>Proxy / APM</strong> expansion</span></td>
+      <td><span class="purpose">Kibana, APM Server, and coordination</span></td>
+    </tr>
+    <tr class="total-row">
+      <td colspan="2"><span class="total-label">Total New Instances</span></td>
+      <td><span class="total-count">+15</span></td>
+      <td colspan="2"></td>
+      <td><span class="total-spec">+106 TB NVMe</span></td>
+      <td colspan="2"><span class="total-nodes">Current 33 → Proposed 48 allocators</span></td>
+    </tr>
+  </tbody>
+</table>
+<div class="ece-note f3">
+  <div class="ece-icon">ℹ</div>
+  <div>Once instances are launched and the ECE agent is installed, <strong>ECE automatically detects capacity and makes it available</strong> for cluster operations. No manual shard assignment required — scale the cluster via the ECE console and nodes distribute automatically.</div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>
