@@ -47,9 +47,9 @@ h2{font-size:2.5rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin
   <p class="subtitle f2">The Elastic AI Assistant brings an LLM directly into your observability workflow — contextualised on your own logs, metrics, and alerts, not a generic training set.</p>
   <div class="caps f3">
     <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Natural language to ES|QL</strong> — describe what you want to find; the assistant writes the query</div></div>
-    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Alert interpretation</strong> — paste an alert and get a plain-language root-cause hypothesis with supporting log evidence</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Alert interpretation</strong> — paste an alert and get a plain-language root-cause hypothesis with supporting log and metric evidence</div></div>
     <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Runbook generation</strong> — the assistant drafts remediation steps grounded in your actual environment and past resolutions</div></div>
-    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Bring your own LLM</strong> — works with Claude, GPT-4, Gemini, and local models via Bedrock, Azure OpenAI, or self-hosted endpoints</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Air-gap friendly</strong> — runs entirely on self-hosted LLMs via Ollama or vLLM; no internet or cloud API access required</div></div>
   </div>
 </div>
 <div class="right f2">
@@ -59,13 +59,13 @@ h2{font-size:2.5rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin
       <div class="chat-title">Elastic AI Assistant · Observability</div>
     </div>
     <div class="chat-body">
-      <div class="msg msg-user">"Why are error rates spiking on the payments service over the last 30 minutes?"</div>
+      <div class="msg msg-user">"YARN jobs are failing cluster-wide — what's wrong with the cluster right now?"</div>
       <div class="msg msg-ai">
-        <span class="tag">Analysis</span> I found <strong>3 contributing signals</strong> in the last 30 min:<br><br>
-        1. <strong>DB connection pool exhaustion</strong> on payments-db-02 — latency p99 jumped from 45ms → 890ms at 14:22 UTC<br>
-        2. <strong>23 OOM restarts</strong> across payments-worker pods following a bad deploy at 14:18<br>
-        3. <strong>Downstream timeout cascade</strong> from order-service waiting on payments<br><br>
-        <span class="tag">Suggested action</span> Roll back deployment <code>payments-v2.1.4</code> and increase DB pool size.
+        <span class="tag">Analysis</span> I found <strong>3 contributing signals</strong> in the last 20 min:<br><br>
+        1. <strong>3 DataNodes lost heartbeat</strong> to NameNode at 02:14 UTC — dn-07, dn-11, dn-14 — HDFS now under-replicated on 847 blocks<br>
+        2. <strong>Disk saturation</strong> on all three hosts: <code>/data/hadoop/disk3</code> at 99.8% — DataNode WriteException logs confirm<br>
+        3. <strong>YARN NodeManager exited</strong> on affected hosts (exit code 1: local disks full) — cascading job failures<br><br>
+        <span class="tag">Suggested action</span> Clear <code>/tmp/hadoop-yarn</code> logs on dn-07 &amp; dn-14 and restart NodeManager. Flag dn-11 — kernel I/O errors indicate hardware disk failure.
       </div>
     </div>
     <div class="chat-prompt">

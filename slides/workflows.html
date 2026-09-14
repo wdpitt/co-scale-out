@@ -69,28 +69,28 @@ h2{font-size:2.2rem;font-weight:900;letter-spacing:-.025em;line-height:1.15;marg
   <div class="step">
     <div class="step-node">✅</div>
     <div class="step-title">Notify</div>
-    <div class="step-desc">Targeted digest to Slack, PagerDuty, or Teams with full context</div>
+    <div class="step-desc">Targeted digest to on-call via email, internal ticket, or shared ops display</div>
   </div>
 </div>
 <div class="use-cases f3">
   <div class="uc">
-    <div class="uc-title">Auto-ticketing</div>
-    <div class="uc-desc">Create JIRA / ServiceNow tickets with pre-filled severity, affected components, and suggested assignee</div>
-    <div class="uc-tag">ITSM</div>
+    <div class="uc-title">DataNode Failure Response</div>
+    <div class="uc-desc">Detect heartbeat loss, correlated with disk SMART or I/O errors, auto-decommission the node in HDFS and trigger block replication recovery</div>
+    <div class="uc-tag">HDFS</div>
   </div>
   <div class="uc">
-    <div class="uc-title">Slack Digest</div>
-    <div class="uc-desc">Replace alert spam with a single enriched message — one click to acknowledge or escalate</div>
-    <div class="uc-tag">ChatOps</div>
+    <div class="uc-title">Shift-Change Briefing</div>
+    <div class="uc-desc">Generate a cluster health digest — node status, under-replicated blocks, YARN queue depth, host hardware alerts — delivered to on-call before every shift handoff</div>
+    <div class="uc-tag">Ops Handoff</div>
   </div>
   <div class="uc">
-    <div class="uc-title">Auto-Remediation</div>
-    <div class="uc-desc">Trigger pod restarts, scaling events, or config rollbacks directly from the workflow for known failure modes</div>
-    <div class="uc-tag">Automation</div>
+    <div class="uc-title">Runaway Job Containment</div>
+    <div class="uc-desc">Detect YARN jobs consuming excessive CPU or memory beyond policy thresholds, kill the job, capture the diagnostic bundle, and notify the submitting user</div>
+    <div class="uc-tag">YARN</div>
   </div>
   <div class="uc">
-    <div class="uc-title">Scheduled Checks</div>
-    <div class="uc-desc">Proactive health summaries on a cron — status digests delivered before on-call shift changes</div>
+    <div class="uc-title">Nightly Hardware Sweep</div>
+    <div class="uc-desc">Scheduled check of disk SMART data, NIC error counters, and memory ECC event logs across all cluster hosts — flag degraded hardware before it fails</div>
     <div class="uc-tag">Proactive</div>
   </div>
 </div>

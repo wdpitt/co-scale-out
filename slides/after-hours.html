@@ -47,63 +47,63 @@ h2{font-size:2rem;font-weight:900;letter-spacing:-.025em;line-height:1.2;margin-
 <body>
 <div class="bar"></div>
 <div class="eyebrow f1">Workflows · After-Hours Teams</div>
-<h2 class="f1">2am alert. Resolved before the team wakes up.</h2>
-<p class="subtitle f1">Workflows acts as a first responder — triaging, enriching, and often resolving incidents before an on-call engineer has to context-switch from sleep.</p>
+<h2 class="f1">2am alert. Two nodes recover themselves.<br>One flags a dead disk.</h2>
+<p class="subtitle f1">Workflows triages a Hadoop DataNode failure cascade — auto-recovering the recoverable, escalating the hardware fault, and handing the morning shift a full diagnostic brief.</p>
 <div class="timeline f2">
   <div class="event ev1">
     <div class="event-time">🔴</div>
     <div class="event-body">
-      <div class="event-tag">02:07 UTC — Alert Fires</div>
-      <div class="event-title">Error rate threshold exceeded — payment-service</div>
-      <div class="event-desc">Rule detects 5xx rate &gt; 8% over 5-min window. Workflow triggers immediately — no human page yet.</div>
+      <div class="event-tag">02:14 UTC — Alert Fires</div>
+      <div class="event-title">HDFS under-replication threshold exceeded — 847 blocks below replication factor</div>
+      <div class="event-desc">NameNode detects replication drop across multiple blocks. Workflow triggers immediately — no human page yet.</div>
     </div>
   </div>
   <div class="event ev2">
     <div class="event-time">🤖</div>
     <div class="event-body">
-      <div class="event-tag">02:07 — AI Triage</div>
-      <div class="event-title">AI Assistant identifies root cause in seconds</div>
-      <div class="event-desc">Correlates logs, traces, and metrics. Surfaces DB connection pool exhaustion + recent deploy as contributing signals.</div>
-      <div class="event-mono">payments-db-02 pool_exhausted=true · deploy payments-v2.1.4 @ 02:02</div>
+      <div class="event-tag">02:14 — AI Triage</div>
+      <div class="event-title">AI Assistant correlates DataNode logs, disk metrics, and kernel syslog</div>
+      <div class="event-desc">3 DataNodes lost heartbeat. Root causes differ: dn-07 and dn-14 are disk-full; dn-11 shows kernel I/O errors indicating hardware failure.</div>
+      <div class="event-mono">dn-07 dn-14: /data/hadoop/disk3 at 99.8% · dn-11: sda3 I/O error blk_update_request</div>
     </div>
   </div>
   <div class="event ev3">
     <div class="event-time">🌿</div>
     <div class="event-body">
-      <div class="event-tag">02:07 — Branch: Known Failure</div>
-      <div class="event-title">Workflow matches pattern → auto-remediation path</div>
-      <div class="event-desc">Deploy rollback pattern matched. Workflow triggers automated rollback of payments-v2.1.4 via deployment pipeline webhook.</div>
+      <div class="event-tag">02:15 — Branch: Split Path</div>
+      <div class="event-title">Disk-full nodes → auto-remediation &nbsp;·&nbsp; hardware fault → escalation</div>
+      <div class="event-desc">dn-07 and dn-14 match known disk-full pattern: workflow clears YARN temp logs, frees space, and restarts DataNode process. dn-11 routed to hardware-fault path requiring physical inspection.</div>
     </div>
   </div>
   <div class="event ev4">
-    <div class="event-time">📬</div>
+    <div class="event-time">📋</div>
     <div class="event-body">
-      <div class="event-tag">02:09 — Notify</div>
-      <div class="event-title">On-call receives a digest, not a wake-up</div>
-      <div class="event-desc">Slack message: incident summary, root cause, action taken, current status. No page. Engineer reviews in the morning with full context already captured.</div>
+      <div class="event-tag">02:16 — Notify</div>
+      <div class="event-title">On-call receives a structured incident brief — no wake-up required</div>
+      <div class="event-desc">Digest delivered to on-call terminal and internal ticket system: 2 nodes auto-recovered, 1 node (dn-11) requires hardware team, HDFS replication recovery in progress (~18 min estimated).</div>
     </div>
   </div>
   <div class="event ev5">
     <div class="event-time">✅</div>
     <div class="event-body">
-      <div class="event-tag">02:11 — Resolved</div>
-      <div class="event-title">Error rate returns to baseline · MTTR: 4 minutes</div>
-      <div class="event-desc">Workflow closes the ticket, posts resolution summary, and logs the incident for shift-change briefing. No human intervention required.</div>
+      <div class="event-tag">02:32 — Partial Resolution · MTTR: 18 min</div>
+      <div class="event-title">dn-07 and dn-14 back online · dn-11 quarantined with full diagnostic bundle</div>
+      <div class="event-desc">847 blocks back to replication factor. dn-11 flagged for hardware team with SMART data, kernel logs, and error timeline attached. Morning shift briefed — no context lost.</div>
     </div>
   </div>
 </div>
 <div class="outcomes f3">
   <div class="outcome">
-    <div class="outcome-num">&lt; 4 min</div>
-    <div class="outcome-label">Mean time to resolve for known failure patterns</div>
+    <div class="outcome-num">18 min</div>
+    <div class="outcome-label">MTTR for disk-full DataNode failures — fully automated</div>
   </div>
   <div class="outcome">
     <div class="outcome-num">0</div>
-    <div class="outcome-label">On-call wake-ups for auto-remediable incidents</div>
+    <div class="outcome-label">On-call wake-ups for auto-remediable node failures</div>
   </div>
   <div class="outcome">
     <div class="outcome-num">100%</div>
-    <div class="outcome-label">Context preserved for morning shift — no knowledge loss</div>
+    <div class="outcome-label">Diagnostic context captured and handed to morning shift</div>
   </div>
 </div>
 <script src="/js/fuckslides.js"></script>
