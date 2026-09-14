@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — AI Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;align-items:center;gap:72px;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .25s}
+.f3{opacity:0;animation:up .5s ease forwards .45s}
+.left{flex:1}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:14px}
+h2{font-size:2.5rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.subtitle{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.55;margin-bottom:26px}
+.caps{display:flex;flex-direction:column;gap:10px}
+.cap{display:flex;gap:12px;align-items:flex-start}
+.cap-dot{width:6px;height:6px;border-radius:50%;background:#00BFB3;flex-shrink:0;margin-top:7px}
+.cap-text{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.7);line-height:1.5}
+.cap-text strong{color:#fff;font-weight:700}
+.right{flex-shrink:0;width:440px}
+.chat-window{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden}
+.chat-header{background:rgba(0,191,179,.1);border-bottom:1px solid rgba(0,191,179,.2);padding:12px 18px;display:flex;align-items:center;gap:10px}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:#00BFB3}
+.chat-title{font-size:.8rem;font-weight:700;color:#00BFB3;letter-spacing:.05em}
+.chat-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.5}
+.msg-user{background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);align-self:flex-end;font-style:italic}
+.msg-ai{background:rgba(0,191,179,.1);border:1px solid rgba(0,191,179,.2);color:rgba(255,255,255,.85);align-self:flex-start}
+.msg-ai strong{color:#00BFB3}
+.msg-ai .tag{display:inline-block;background:rgba(0,191,179,.15);border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#00BFB3;padding:1px 7px;margin-right:4px}
+.chat-prompt{border-top:1px solid rgba(255,255,255,.06);padding:12px 18px;display:flex;align-items:center;gap:10px}
+.prompt-input{flex:1;font-size:.78rem;color:rgba(255,255,255,.25);font-family:'Inter',sans-serif;font-style:italic}
+.prompt-icon{font-size:1rem;color:#00BFB3;opacity:.6}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="left">
+  <div class="eyebrow f1">Elastic AI Assistant</div>
+  <h2 class="f2">Ask the data.<br>Get answers.</h2>
+  <p class="subtitle f2">The Elastic AI Assistant brings an LLM directly into your observability workflow — contextualised on your own logs, metrics, and alerts, not a generic training set.</p>
+  <div class="caps f3">
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Natural language to ES|QL</strong> — describe what you want to find; the assistant writes the query</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Alert interpretation</strong> — paste an alert and get a plain-language root-cause hypothesis with supporting log evidence</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Runbook generation</strong> — the assistant drafts remediation steps grounded in your actual environment and past resolutions</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Bring your own LLM</strong> — works with Claude, GPT-4, Gemini, and local models via Bedrock, Azure OpenAI, or self-hosted endpoints</div></div>
+  </div>
+</div>
+<div class="right f2">
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="chat-dot"></div>
+      <div class="chat-title">Elastic AI Assistant · Observability</div>
+    </div>
+    <div class="chat-body">
+      <div class="msg msg-user">"Why are error rates spiking on the payments service over the last 30 minutes?"</div>
+      <div class="msg msg-ai">
+        <span class="tag">Analysis</span> I found <strong>3 contributing signals</strong> in the last 30 min:<br><br>
+        1. <strong>DB connection pool exhaustion</strong> on payments-db-02 — latency p99 jumped from 45ms → 890ms at 14:22 UTC<br>
+        2. <strong>23 OOM restarts</strong> across payments-worker pods following a bad deploy at 14:18<br>
+        3. <strong>Downstream timeout cascade</strong> from order-service waiting on payments<br><br>
+        <span class="tag">Suggested action</span> Roll back deployment <code>payments-v2.1.4</code> and increase DB pool size.
+      </div>
+    </div>
+    <div class="chat-prompt">
+      <div class="prompt-input">Ask a follow-up or paste another alert…</div>
+      <div class="prompt-icon">↑</div>
+    </div>
+  </div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

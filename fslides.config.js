@@ -1,19 +1,35 @@
 module.exports = {
   name: 'co-scale-out',
-  title: 'co-scale-out',
-  repo: 'wdpitt/co-scale-out',            // powers slide comments (GitHub issues)
-  gateway: 'https://api.fslides.dev',   // sign-in broker for commenting on the published deck
+  title: 'Scaling Elastic to 40TB/Day',
+  repo: 'wdpitt/co-scale-out',
+  gateway: 'https://api.fslides.dev',
   slidesDir: 'slides',
 
   slides: [
     'cover.html',
-    'stat.html',
+    'challenge.html',
+    'efficiency.html',
+    'config.html',
+    'logsdb.html',
+    'tiers.html',
+    'metrics.html',
+    'ai-assistant.html',
+    'workflows.html',
+    'after-hours.html',
     'closing.html',
   ],
 
   labels: [
     'Cover',
-    'The Number',
-    'Thank You',
+    'The Challenge',
+    'Efficiency Story',
+    'Configuration',
+    'LogsDB',
+    'Tiered Storage',
+    'Metrics & Prometheus',
+    'AI Assistant',
+    'Workflows',
+    'After-Hours Teams',
+    'Next Steps',
   ],
 };

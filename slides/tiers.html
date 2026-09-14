@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — Tiered Storage</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .4s}
+.f4{opacity:0;animation:up .5s ease forwards .6s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:14px}
+h2{font-size:2rem;font-weight:900;letter-spacing:-.025em;line-height:1.2;margin-bottom:8px}
+.subtitle{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.45);margin-bottom:32px;line-height:1.5}
+.tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
+.tier{border-radius:12px;padding:24px;position:relative;overflow:hidden}
+.tier-hot{background:rgba(255,140,0,.08);border:1px solid rgba(255,165,0,.2)}
+.tier-cold{background:rgba(30,144,255,.08);border:1px solid rgba(30,144,255,.2)}
+.tier-frozen{background:rgba(0,191,179,.08);border:1px solid rgba(0,191,179,.25)}
+.tier-label{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.tier-hot .tier-label{color:rgba(255,165,0,.8)}
+.tier-cold .tier-label{color:rgba(100,180,255,.8)}
+.tier-frozen .tier-label{color:#00BFB3}
+.tier-name{font-size:1.8rem;font-weight:900;letter-spacing:-.02em;margin-bottom:14px}
+.tier-hot .tier-name{color:rgba(255,180,50,.95)}
+.tier-cold .tier-name{color:rgba(120,190,255,.95)}
+.tier-frozen .tier-name{color:#00BFB3}
+.tier-stat{margin-bottom:6px}
+.tier-stat-val{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:#fff}
+.tier-stat-key{font-size:.72rem;font-weight:400;color:rgba(255,255,255,.4);margin-left:6px}
+.tier-desc{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.45;margin-top:14px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+.tier-media{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;padding:5px 10px;border-radius:5px;display:inline-block}
+.tier-hot .tier-media{background:rgba(255,165,0,.1);color:rgba(255,165,0,.8)}
+.tier-cold .tier-media{background:rgba(30,144,255,.1);color:rgba(100,180,255,.8)}
+.tier-frozen .tier-media{background:rgba(0,191,179,.1);color:#00BFB3}
+.flow{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 20px}
+.flow-step{font-size:.8rem;font-weight:700;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:8px}
+.flow-step::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.flow-hot::before{background:rgba(255,165,0,.8)}
+.flow-cold::before{background:rgba(100,180,255,.8)}
+.flow-frozen::before{background:#00BFB3}
+.flow-arrow{color:rgba(255,255,255,.2);font-size:1rem}
+.flow-label{font-size:.72rem;font-weight:300;color:rgba(255,255,255,.35);margin-left:auto}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="eyebrow f1">Tiered Storage Architecture</div>
+<h2 class="f1">Right data, right tier, right cost.</h2>
+<p class="subtitle f1">Every byte automatically migrated by ILM policy — search performance and cost in balance at every point in the data lifecycle.</p>
+<div class="tiers f2">
+  <div class="tier tier-hot">
+    <div class="tier-label">Tier 1</div>
+    <div class="tier-name">Hot</div>
+    <div class="tier-stat"><span class="tier-stat-val">48</span><span class="tier-stat-key">data nodes (proposed)</span></div>
+    <div class="tier-stat"><span class="tier-stat-val">18</span><span class="tier-stat-key">i3.8xlarge · 7.6 TB NVMe ea.</span></div>
+    <div class="tier-media">NVMe SSD</div>
+    <div class="tier-desc">Highest IOPS, full indexing throughput. Recent data — minutes to days. Sized to absorb 40TB/day ingest without performance degradation.</div>
+  </div>
+  <div class="tier tier-cold">
+    <div class="tier-label">Tier 2</div>
+    <div class="tier-name">Cold</div>
+    <div class="tier-stat"><span class="tier-stat-val">30</span><span class="tier-stat-key">data nodes (proposed)</span></div>
+    <div class="tier-stat"><span class="tier-stat-val">15</span><span class="tier-stat-key">i3en.6xlarge · 15 TB NVMe ea.</span></div>
+    <div class="tier-media">Dense NVMe</div>
+    <div class="tier-desc">Read-optimised, high-capacity nodes. Weeks to months of searchable history. Dense NVMe maximises GB/$ at this tier without sacrificing query speed.</div>
+  </div>
+  <div class="tier tier-frozen">
+    <div class="tier-label">Tier 3</div>
+    <div class="tier-name">Frozen</div>
+    <div class="tier-stat"><span class="tier-stat-val">6</span><span class="tier-stat-key">data nodes (proposed)</span></div>
+    <div class="tier-stat"><span class="tier-stat-val">6</span><span class="tier-stat-key">i3en.2xlarge · 5 TB NVMe ea.</span></div>
+    <div class="tier-media">S3 + Local Cache</div>
+    <div class="tier-desc">Long-term retention backed by S3. Data stays fully searchable — compute spins up on query, cost stays near zero at rest. Years of history, pennies per GB.</div>
+  </div>
+</div>
+<div class="flow f3">
+  <div class="flow-step flow-hot">Hot &nbsp;— active ingest &amp; search</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step flow-cold">Cold &nbsp;— retention &amp; compliance</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step flow-frozen">Frozen &nbsp;— archive &amp; audit</div>
+  <div class="flow-label">Automated by ILM / Data Stream Lifecycle policy &nbsp;·&nbsp; zero manual intervention</div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

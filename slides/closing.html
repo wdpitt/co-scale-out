@@ -2,25 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Deck — Thank You</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;800;900&display=swap" rel="stylesheet">
+<title>Deck — Next Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{width:100%;height:100%;overflow:hidden;background:#22242C}
-body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 90px}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;align-items:center;gap:80px;padding:0 90px}
 body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
 .bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.f1{opacity:0;animation:up .6s ease forwards .15s}.f2{opacity:0;animation:up .6s ease forwards .4s}
-h1{font-size:5.4rem;font-weight:900;letter-spacing:-.04em;margin-bottom:22px}
-.sub{font-size:1.25rem;font-weight:300;color:rgba(255,255,255,.55)}
-.sub strong{color:#00BFB3;font-weight:800}
+.glow{position:fixed;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,191,179,.08),transparent 70%);pointer-events:none}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .6s ease forwards .1s}
+.f2{opacity:0;animation:up .6s ease forwards .3s}
+.f3{opacity:0;animation:up .6s ease forwards .5s}
+.left{flex:1}
+h1{font-size:4.2rem;font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:20px}
+h1 span{color:#00BFB3}
+.tagline{font-size:1.1rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6;max-width:480px}
+.right{flex-shrink:0;width:400px;display:flex;flex-direction:column;gap:14px}
+.next-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start}
+.next-num{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:#00BFB3;background:rgba(0,191,179,.1);border-radius:6px;padding:4px 10px;flex-shrink:0;margin-top:1px}
+.next-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:3px}
+.next-desc{font-size:.78rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.4}
 </style>
 </head>
 <body>
 <div class="bar"></div>
-<h1 class="f1">Thank you.</h1>
-<p class="sub f2">One clear call to action — <strong>where to go next</strong>.</p>
+<div class="glow"></div>
+<div class="left">
+  <h1 class="f1">Elastic at<br><span>40TB/day.</span><br>Ready now.</h1>
+  <p class="tagline f2">176% more licenses carrying 440% more data — and a platform built to keep compounding those gains as ingest grows and observability deepens.</p>
+</div>
+<div class="right f3">
+  <div class="next-item">
+    <div class="next-num">01</div>
+    <div>
+      <div class="next-title">Approve Scale-Out Configuration</div>
+      <div class="next-desc">Sign off on the 127 ERU proposed configuration to begin provisioning the additional instances</div>
+    </div>
+  </div>
+  <div class="next-item">
+    <div class="next-num">02</div>
+    <div>
+      <div class="next-title">Enable LogsDB on New Indices</div>
+      <div class="next-desc">Roll out LogsDB index mode for all new data streams — existing indices migrate on next rollover</div>
+    </div>
+  </div>
+  <div class="next-item">
+    <div class="next-num">03</div>
+    <div>
+      <div class="next-title">Configure AI Assistant + Workflows</div>
+      <div class="next-desc">Connect the LLM backend and stand up the first after-hours triage workflows with the ops team</div>
+    </div>
+  </div>
+  <div class="next-item">
+    <div class="next-num">04</div>
+    <div>
+      <div class="next-title">Enable Prometheus Remote Write</div>
+      <div class="next-desc">Point existing Prometheus scrapers at the Elastic endpoint and decommission standalone Prometheus</div>
+    </div>
+  </div>
+</div>
 <script src="/js/fuckslides.js"></script>
 <script>
 (function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — LogsDB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;align-items:center;gap:72px;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .35s}
+.f4{opacity:0;animation:up .5s ease forwards .5s}
+.left{flex:1}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:16px}
+h2{font-size:2.6rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+.subtitle{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.55;margin-bottom:28px}
+.feature-list{display:flex;flex-direction:column;gap:14px}
+.feature{display:flex;gap:14px;align-items:flex-start}
+.feature-dot{width:6px;height:6px;border-radius:50%;background:#00BFB3;flex-shrink:0;margin-top:7px}
+.feature-text{font-size:.95rem;font-weight:300;color:rgba(255,255,255,.7);line-height:1.5}
+.feature-text strong{color:#fff;font-weight:700}
+.right{flex-shrink:0;width:380px;display:flex;flex-direction:column;gap:16px}
+.compression-card{background:rgba(0,191,179,.07);border:1px solid rgba(0,191,179,.2);border-radius:12px;padding:22px 24px}
+.compression-label{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,191,179,.7);margin-bottom:14px}
+.bar-row{margin-bottom:10px}
+.bar-row-label{display:flex;justify-content:space-between;margin-bottom:5px}
+.bar-row-name{font-size:.8rem;font-weight:400;color:rgba(255,255,255,.6)}
+.bar-row-val{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;color:#fff}
+.bar-track{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-fill.a{background:rgba(255,255,255,.25);width:100%}
+.bar-fill.b{background:#00BFB3;width:42%}
+.compression-note{font-size:.75rem;font-weight:300;color:rgba(255,255,255,.35);margin-top:12px;line-height:1.4}
+.tech-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px 20px}
+.tech-title{font-size:.8rem;font-weight:700;color:#fff;margin-bottom:8px}
+.tech-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.06);border-radius:5px;padding:4px 10px;color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="left">
+  <div class="eyebrow f1">LogsDB Index Mode</div>
+  <h2 class="f2">Store more.<br>Pay less.</h2>
+  <p class="subtitle f2">LogsDB rewrites the storage contract for log data — keeping everything you need and dropping everything you don't.</p>
+  <div class="feature-list f3">
+    <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Doc-values only storage</strong> — eliminates the inverted index for fields that don't need full-text search, cutting per-field overhead significantly</div></div>
+    <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Synthetic _source reconstruction</strong> — source documents are rebuilt on-read from doc values, removing the largest single storage cost</div></div>
+    <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>TSDS-style column compression</strong> — time-series sorting groups similar values together, enabling much higher compression ratios</div></div>
+    <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Fully transparent</strong> — same APIs, same query surface, same Kibana experience. No application changes required</div></div>
+  </div>
+</div>
+<div class="right">
+  <div class="compression-card f3">
+    <div class="compression-label">On-Disk Size · Same Raw Data</div>
+    <div class="bar-row">
+      <div class="bar-row-label"><span class="bar-row-name">Standard Index</span><span class="bar-row-val">1.0×</span></div>
+      <div class="bar-track"><div class="bar-fill a"></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-row-label"><span class="bar-row-name">LogsDB</span><span class="bar-row-val" style="color:#00BFB3">~0.4× (typical)</span></div>
+      <div class="bar-track"><div class="bar-fill b"></div></div>
+    </div>
+    <div class="compression-note">Compression ratios vary by data type and cardinality. Structured log data with many repeated field values sees the largest gains.</div>
+  </div>
+  <div class="tech-card f4">
+    <div class="tech-title">What stays the same</div>
+    <div class="tech-chips">
+      <div class="chip">ES|QL</div>
+      <div class="chip">Kibana Discover</div>
+      <div class="chip">Alerting</div>
+      <div class="chip">Dashboards</div>
+      <div class="chip">ILM / DSL</div>
+      <div class="chip">Fleet Ingest</div>
+      <div class="chip">All Search APIs</div>
+    </div>
+  </div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — Configuration Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 80px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.col-header{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:10px 20px;border-radius:8px 8px 0 0;margin-bottom:0}
+.col-header.current{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
+.col-header.proposed{background:rgba(0,191,179,.12);color:#00BFB3}
+.col-eru{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;float:right;margin-top:-2px}
+.col-eru.current{color:rgba(255,255,255,.35)}
+.col-eru.proposed{color:#00BFB3}
+.col-body{border-radius:0 0 10px 10px;overflow:hidden}
+.col-body.current{border:1px solid rgba(255,255,255,.08);border-top:none}
+.col-body.proposed{border:1px solid rgba(0,191,179,.25);border-top:none}
+.section-head{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:8px 16px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.3)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;border-top:1px solid rgba(255,255,255,.05)}
+.row:hover{background:rgba(255,255,255,.02)}
+.row-label{font-size:.85rem;font-weight:400;color:rgba(255,255,255,.7);font-family:'JetBrains Mono',monospace}
+.row-count{font-size:.85rem;font-weight:700;color:rgba(255,255,255,.5)}
+.row-count.proposed{color:#00BFB3}
+.row-spec{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:1px;font-family:'JetBrains Mono',monospace}
+.row-left{display:flex;flex-direction:column}
+.topology{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px}
+.node-badge{font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:5px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.node-count{font-size:1rem;line-height:1}
+.node-label{font-size:.6rem;letter-spacing:.08em;opacity:.7}
+.node-badge.master{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6)}
+.node-badge.kibana{background:rgba(100,149,237,.15);color:rgba(100,149,237,.9)}
+.node-badge.ml{background:rgba(148,103,189,.15);color:rgba(148,103,189,.9)}
+.node-badge.hot{background:rgba(255,140,0,.12);color:rgba(255,165,0,.9)}
+.node-badge.cold{background:rgba(30,144,255,.12);color:rgba(100,180,255,.9)}
+.node-badge.frozen{background:rgba(0,191,179,.1);color:#00BFB3}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="eyebrow f1">Configuration Comparison</div>
+<div class="grid f2">
+  <!-- CURRENT -->
+  <div>
+    <div class="col-header current">Current Configuration <span class="col-eru current">72 ERU</span></div>
+    <div class="col-body current">
+      <div class="section-head">AWS Instances</div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">m5.4xlarge</div><div class="row-spec">16 CPU · 64 GB RAM</div></div>
+        <div class="row-count">× 3</div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">m5d.xlarge</div><div class="row-spec">4 CPU · 16 GB · 150 GB NVMe</div></div>
+        <div class="row-count">× 3</div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3.8xlarge</div><div class="row-spec">32 CPU · 244 GB · 7.6 TB NVMe</div></div>
+        <div class="row-count">× 12</div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3en.6xlarge</div><div class="row-spec">24 CPU · 192 GB · 15 TB NVMe</div></div>
+        <div class="row-count">× 12</div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3en.2xlarge</div><div class="row-spec">8 CPU · 64 GB · 5 TB NVMe</div></div>
+        <div class="row-count">× 3</div>
+      </div>
+      <div class="section-head">Cluster Topology</div>
+      <div class="topology">
+        <div class="node-badge master"><div class="node-count">3</div><div class="node-label">Master</div></div>
+        <div class="node-badge kibana"><div class="node-count">2</div><div class="node-label">Kibana</div></div>
+        <div class="node-badge ml"><div class="node-count">3</div><div class="node-label">ML</div></div>
+        <div class="node-badge hot"><div class="node-count">36</div><div class="node-label">Hot</div></div>
+        <div class="node-badge cold"><div class="node-count">24</div><div class="node-label">Cold</div></div>
+        <div class="node-badge frozen"><div class="node-count">3</div><div class="node-label">Frozen</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- PROPOSED -->
+  <div>
+    <div class="col-header proposed">Proposed Configuration <span class="col-eru proposed">127 ERU</span></div>
+    <div class="col-body proposed">
+      <div class="section-head">AWS Instances</div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">m5.4xlarge</div><div class="row-spec">16 CPU · 64 GB RAM</div></div>
+        <div class="row-count proposed">× 3</div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">m5d.xlarge</div><div class="row-spec">4 CPU · 16 GB · 150 GB NVMe</div></div>
+        <div class="row-count proposed">× 6 <span style="color:rgba(0,191,179,.5);font-size:.7rem">+3</span></div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3.8xlarge</div><div class="row-spec">32 CPU · 244 GB · 7.6 TB NVMe</div></div>
+        <div class="row-count proposed">× 18 <span style="color:rgba(0,191,179,.5);font-size:.7rem">+6</span></div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3en.6xlarge</div><div class="row-spec">24 CPU · 192 GB · 15 TB NVMe</div></div>
+        <div class="row-count proposed">× 15 <span style="color:rgba(0,191,179,.5);font-size:.7rem">+3</span></div>
+      </div>
+      <div class="row">
+        <div class="row-left"><div class="row-label">i3en.2xlarge</div><div class="row-spec">8 CPU · 64 GB · 5 TB NVMe</div></div>
+        <div class="row-count proposed">× 6 <span style="color:rgba(0,191,179,.5);font-size:.7rem">+3</span></div>
+      </div>
+      <div class="section-head">Cluster Topology</div>
+      <div class="topology">
+        <div class="node-badge master"><div class="node-count">3</div><div class="node-label">Master</div></div>
+        <div class="node-badge kibana"><div class="node-count">2</div><div class="node-label">Kibana</div></div>
+        <div class="node-badge ml"><div class="node-count">3</div><div class="node-label">ML</div></div>
+        <div class="node-badge hot"><div class="node-count">48</div><div class="node-label">Hot</div></div>
+        <div class="node-badge cold"><div class="node-count">30</div><div class="node-label">Cold</div></div>
+        <div class="node-badge frozen"><div class="node-count">6</div><div class="node-label">Frozen</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

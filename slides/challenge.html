@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — The Challenge</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;align-items:center;gap:80px;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .1s}
+.f2{opacity:0;animation:up .5s ease forwards .35s}
+.f3{opacity:0;animation:up .5s ease forwards .55s}
+.left{flex-shrink:0;text-align:center}
+.arrow-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.stat{font-family:'JetBrains Mono',monospace;font-weight:900;line-height:1}
+.stat-old{font-size:4.2rem;color:rgba(255,255,255,.3)}
+.lbl-old{font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:6px}
+.arrow{font-size:2rem;color:rgba(0,191,179,.5);line-height:1;padding:6px 0}
+.stat-new{font-size:7.6rem;color:#00BFB3;text-shadow:0 0 60px rgba(0,191,179,.35)}
+.lbl-new{font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#00BFB3;margin-top:8px}
+.divider{width:1px;height:320px;background:rgba(255,255,255,.08);flex-shrink:0}
+.right{flex:1}
+h2{font-size:2rem;font-weight:900;letter-spacing:-.025em;line-height:1.2;margin-bottom:32px}
+ul{list-style:none;display:flex;flex-direction:column;gap:20px}
+li{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.7);display:flex;gap:16px;align-items:flex-start;line-height:1.5}
+li .dot{width:8px;height:8px;border-radius:50%;background:#00BFB3;flex-shrink:0;margin-top:6px}
+li strong{color:#fff;font-weight:700}
+.badge{display:inline-block;background:rgba(0,191,179,.15);border:1px solid rgba(0,191,179,.3);border-radius:6px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#00BFB3;padding:3px 10px;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="left f1">
+  <div class="arrow-wrap">
+    <div>
+      <div class="stat stat-old">9TB</div>
+      <div class="lbl-old">Migration Target</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div>
+      <div class="stat stat-new">40TB</div>
+      <div class="lbl-new">Current Daily Ingest</div>
+    </div>
+  </div>
+</div>
+<div class="divider f1"></div>
+<div class="right f2">
+  <h2>The platform was sized<br>for a world that no longer exists.</h2>
+  <ul>
+    <li><div class="dot"></div><span>Cloud migration was contracted at <strong>9TB/day</strong> — resources scaled back accordingly</span></li>
+    <li><div class="dot"></div><span>Operational reality: ingest has grown back to <strong>~40TB/day</strong> <span class="badge">+440%</span></span></li>
+    <li><div class="dot"></div><span>The current configuration cannot sustain this volume at production SLAs</span></li>
+    <li><div class="dot"></div><span>A targeted scale-out is needed — <strong>without a 4x increase in license cost</strong></span></li>
+  </ul>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>

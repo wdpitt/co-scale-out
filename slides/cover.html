@@ -10,18 +10,32 @@ html{width:100%;height:100%;overflow:hidden;background:#22242C}
 body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 90px}
 body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
 .bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.f1{opacity:0;animation:up .5s ease forwards .1s}.f2{opacity:0;animation:up .5s ease forwards .3s}.f3{opacity:0;animation:up .5s ease forwards .5s}
-.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:22px}
-h1{font-size:4.6rem;font-weight:900;letter-spacing:-.035em;line-height:1.05;margin-bottom:24px}
-.sub{font-size:1.3rem;font-weight:300;color:rgba(255,255,255,.55);max-width:640px;line-height:1.6}
+.accent-block{position:fixed;bottom:0;right:0;width:340px;height:340px;background:radial-gradient(circle at bottom right,rgba(0,191,179,0.12),transparent 70%);pointer-events:none}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .1s}
+.f2{opacity:0;animation:up .5s ease forwards .3s}
+.f3{opacity:0;animation:up .5s ease forwards .5s}
+.f4{opacity:0;animation:up .5s ease forwards .7s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:28px}
+h1{font-size:4.4rem;font-weight:900;letter-spacing:-.035em;line-height:1.05;margin-bottom:28px}
+h1 span{color:#00BFB3}
+.sub{font-size:1.15rem;font-weight:300;color:rgba(255,255,255,.5);max-width:660px;line-height:1.65;margin-bottom:52px}
+.pills{display:flex;gap:12px}
+.pill{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#00BFB3;border:1px solid rgba(0,191,179,.35);border-radius:100px;padding:6px 16px}
 </style>
 </head>
 <body>
 <div class="bar"></div>
-<div class="eyebrow f1">Team · Topic · Date</div>
-<h1 class="f1">A confident title<br>that takes a stance.</h1>
-<p class="sub f2">One sentence that tells the room why the next twenty minutes matter.</p>
+<div class="accent-block"></div>
+<div class="eyebrow f1">Elastic Observability · Scale-Out Plan · 2026</div>
+<h1 class="f2">More Data.<br>Smarter Storage.<br><span>Lower Cost Per TB.</span></h1>
+<p class="sub f3">How Elastic handles a 440% ingest surge — from 9TB to 40TB/day — with only 176% more licenses, powered by LogsDB compression and intelligent tiered storage.</p>
+<div class="pills f4">
+  <div class="pill">LogsDB</div>
+  <div class="pill">Hot · Cold · Frozen</div>
+  <div class="pill">AI Assistant</div>
+  <div class="pill">Workflows</div>
+</div>
 <script src="/js/fuckslides.js"></script>
 <script>
 (function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();

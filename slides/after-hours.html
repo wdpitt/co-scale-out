@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — After-Hours Teams</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 90px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .4s}
+.f4{opacity:0;animation:up .5s ease forwards .6s}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:14px}
+h2{font-size:2rem;font-weight:900;letter-spacing:-.025em;line-height:1.2;margin-bottom:6px}
+.subtitle{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.45);margin-bottom:24px;line-height:1.5}
+.timeline{display:flex;flex-direction:column;gap:0;margin-bottom:24px;position:relative}
+.timeline::before{content:'';position:absolute;left:20px;top:20px;bottom:20px;width:2px;background:rgba(255,255,255,.07);border-radius:2px}
+.event{display:flex;gap:20px;align-items:flex-start;position:relative;z-index:1;padding:0 0 18px 0}
+.event:last-child{padding-bottom:0}
+.event-time{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;border:2px solid transparent}
+.ev1 .event-time{background:rgba(255,60,60,.12);border-color:rgba(255,60,60,.3)}
+.ev2 .event-time{background:rgba(148,103,189,.12);border-color:rgba(148,103,189,.3)}
+.ev3 .event-time{background:rgba(0,191,179,.1);border-color:rgba(0,191,179,.25)}
+.ev4 .event-time{background:rgba(255,165,0,.1);border-color:rgba(255,165,0,.25)}
+.ev5 .event-time{background:rgba(46,204,113,.12);border-color:rgba(46,204,113,.3)}
+.event-body{flex:1;padding-top:8px}
+.event-tag{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.ev1 .event-tag{color:rgba(255,100,100,.8)}
+.ev2 .event-tag{color:rgba(180,140,220,.8)}
+.ev3 .event-tag{color:#00BFB3}
+.ev4 .event-tag{color:rgba(255,190,60,.8)}
+.ev5 .event-tag{color:rgba(80,220,120,.8)}
+.event-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:3px}
+.event-desc{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.55);line-height:1.4}
+.event-mono{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:rgba(0,191,179,.7);margin-top:3px}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.outcome{background:rgba(0,191,179,.07);border:1px solid rgba(0,191,179,.18);border-radius:10px;padding:14px 16px;text-align:center}
+.outcome-num{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:700;color:#00BFB3;line-height:1}
+.outcome-label{font-size:.72rem;font-weight:300;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.3}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="eyebrow f1">Workflows · After-Hours Teams</div>
+<h2 class="f1">2am alert. Resolved before the team wakes up.</h2>
+<p class="subtitle f1">Workflows acts as a first responder — triaging, enriching, and often resolving incidents before an on-call engineer has to context-switch from sleep.</p>
+<div class="timeline f2">
+  <div class="event ev1">
+    <div class="event-time">🔴</div>
+    <div class="event-body">
+      <div class="event-tag">02:07 UTC — Alert Fires</div>
+      <div class="event-title">Error rate threshold exceeded — payment-service</div>
+      <div class="event-desc">Rule detects 5xx rate &gt; 8% over 5-min window. Workflow triggers immediately — no human page yet.</div>
+    </div>
+  </div>
+  <div class="event ev2">
+    <div class="event-time">🤖</div>
+    <div class="event-body">
+      <div class="event-tag">02:07 — AI Triage</div>
+      <div class="event-title">AI Assistant identifies root cause in seconds</div>
+      <div class="event-desc">Correlates logs, traces, and metrics. Surfaces DB connection pool exhaustion + recent deploy as contributing signals.</div>
+      <div class="event-mono">payments-db-02 pool_exhausted=true · deploy payments-v2.1.4 @ 02:02</div>
+    </div>
+  </div>
+  <div class="event ev3">
+    <div class="event-time">🌿</div>
+    <div class="event-body">
+      <div class="event-tag">02:07 — Branch: Known Failure</div>
+      <div class="event-title">Workflow matches pattern → auto-remediation path</div>
+      <div class="event-desc">Deploy rollback pattern matched. Workflow triggers automated rollback of payments-v2.1.4 via deployment pipeline webhook.</div>
+    </div>
+  </div>
+  <div class="event ev4">
+    <div class="event-time">📬</div>
+    <div class="event-body">
+      <div class="event-tag">02:09 — Notify</div>
+      <div class="event-title">On-call receives a digest, not a wake-up</div>
+      <div class="event-desc">Slack message: incident summary, root cause, action taken, current status. No page. Engineer reviews in the morning with full context already captured.</div>
+    </div>
+  </div>
+  <div class="event ev5">
+    <div class="event-time">✅</div>
+    <div class="event-body">
+      <div class="event-tag">02:11 — Resolved</div>
+      <div class="event-title">Error rate returns to baseline · MTTR: 4 minutes</div>
+      <div class="event-desc">Workflow closes the ticket, posts resolution summary, and logs the incident for shift-change briefing. No human intervention required.</div>
+    </div>
+  </div>
+</div>
+<div class="outcomes f3">
+  <div class="outcome">
+    <div class="outcome-num">&lt; 4 min</div>
+    <div class="outcome-label">Mean time to resolve for known failure patterns</div>
+  </div>
+  <div class="outcome">
+    <div class="outcome-num">0</div>
+    <div class="outcome-label">On-call wake-ups for auto-remediable incidents</div>
+  </div>
+  <div class="outcome">
+    <div class="outcome-num">100%</div>
+    <div class="outcome-label">Context preserved for morning shift — no knowledge loss</div>
+  </div>
+</div>
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>
