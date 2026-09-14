@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deck — Log Search &amp; AI Interaction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;height:100%;overflow:hidden;background:#22242C}
+body{width:1280px;height:720px;overflow:hidden;position:absolute;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;background:#22242C;color:#fff;display:flex;align-items:center;gap:64px;padding:0 80px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.bar{position:fixed;top:0;left:0;width:5px;height:100%;background:#00BFB3}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f1{opacity:0;animation:up .5s ease forwards .05s}
+.f2{opacity:0;animation:up .5s ease forwards .2s}
+.f3{opacity:0;animation:up .5s ease forwards .38s}
+.f4{opacity:0;animation:up .5s ease forwards .54s}
+
+/* Left column */
+.left{flex:1;min-width:0}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#00BFB3;margin-bottom:14px}
+h2{font-size:2.3rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px}
+.subtitle{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.45);line-height:1.55;margin-bottom:22px}
+.caps{display:flex;flex-direction:column;gap:11px}
+.cap{display:flex;gap:12px;align-items:flex-start}
+.cap-dot{width:6px;height:6px;border-radius:50%;background:#00BFB3;flex-shrink:0;margin-top:7px}
+.cap-text{font-size:.86rem;font-weight:300;color:rgba(255,255,255,.7);line-height:1.5}
+.cap-text strong{color:#fff;font-weight:700}
+
+/* Right column — ES|QL demo panel */
+.right{flex-shrink:0;width:490px;display:flex;flex-direction:column;gap:10px}
+.panel{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:12px;overflow:hidden}
+.panel-header{background:rgba(0,191,179,.08);border-bottom:1px solid rgba(0,191,179,.15);padding:9px 16px;display:flex;align-items:center;gap:8px}
+.panel-dot{width:7px;height:7px;border-radius:50%;background:#00BFB3;opacity:.8}
+.panel-title{font-size:.72rem;font-weight:700;letter-spacing:.08em;color:rgba(0,191,179,.8);text-transform:uppercase}
+
+/* Natural language input */
+.nl-body{padding:12px 16px}
+.nl-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:6px}
+.nl-query{font-size:.85rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.4;font-style:italic;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:9px 13px}
+.nl-arrow{text-align:center;font-size:.75rem;color:rgba(0,191,179,.5);padding:4px 0;letter-spacing:.08em;font-weight:700}
+
+/* ES|QL block */
+.esql-body{padding:0 16px 12px}
+.esql-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:6px}
+.esql-code{font-family:'JetBrains Mono',monospace;font-size:.74rem;line-height:1.6;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:7px;padding:10px 13px}
+.kw{color:#00BFB3}
+.fn{color:rgba(180,140,220,.9)}
+.str{color:rgba(255,200,100,.8)}
+.cm{color:rgba(255,255,255,.25);font-style:italic}
+
+/* Results table */
+.results-panel .panel-header{background:rgba(255,255,255,.04);border-bottom-color:rgba(255,255,255,.07)}
+.results-panel .panel-dot{background:rgba(255,255,255,.3)}
+.results-panel .panel-title{color:rgba(255,255,255,.35)}
+.tbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:.73rem}
+.tbl thead tr{border-bottom:1px solid rgba(255,255,255,.07)}
+.tbl th{padding:7px 14px;text-align:left;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);font-family:'Inter',sans-serif}
+.tbl th:last-child{text-align:right}
+.tbl td{padding:6px 14px;color:rgba(255,255,255,.65);border-bottom:1px solid rgba(255,255,255,.04)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:last-child{text-align:right;font-weight:700}
+.host-err{color:rgba(255,100,100,.85)}
+.host-warn{color:rgba(255,190,60,.85)}
+.host-ok{color:rgba(0,191,179,.8)}
+.count-high{color:rgba(255,100,100,.9)}
+.count-mid{color:rgba(255,190,60,.9)}
+.count-low{color:rgba(0,191,179,.9)}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+
+<div class="left">
+  <div class="eyebrow f1">Elastic Observability · Logs</div>
+  <h2 class="f2">Search every log.<br>Ask questions in plain English.</h2>
+  <p class="subtitle f2">Billions of log events across every host, DataNode, and service — unified, searchable, and queryable in natural language through the AI Assistant.</p>
+  <div class="caps f3">
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Kibana Discover</strong> — full-text search with field filtering, live tail, and saved views across all log streams simultaneously</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>ES|QL log queries</strong> — pipe-based query language for aggregation, pattern matching, and time-series analysis without leaving Kibana</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>AI-generated queries</strong> — describe what you're looking for in plain English; the AI Assistant writes and runs the ES|QL automatically</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Pattern &amp; anomaly detection</strong> — ML-based log categorisation surfaces new error patterns and rate spikes without manual rules</div></div>
+    <div class="cap"><div class="cap-dot"></div><div class="cap-text"><strong>Cross-source correlation</strong> — join host syslog, HDFS audit logs, YARN logs, and hardware metrics in a single query for full-stack context</div></div>
+  </div>
+</div>
+
+<div class="right">
+  <!-- Natural language prompt -->
+  <div class="panel f3">
+    <div class="panel-header">
+      <div class="panel-dot"></div>
+      <div class="panel-title">AI Assistant · Log Query</div>
+    </div>
+    <div class="nl-body">
+      <div class="nl-label">Natural language prompt</div>
+      <div class="nl-query">"Which DataNode hosts had the most WARN or ERROR log events in the last 6 hours — group by host and show the top error message for each."</div>
+    </div>
+    <div class="nl-arrow">↓ &nbsp;AI generated ES|QL</div>
+    <div class="esql-body">
+      <div class="esql-label">Generated query</div>
+      <div class="esql-code"><span class="kw">FROM</span> logs-hadoop.datanode-* <span class="cm">// last 6h via time filter</span>
+<span class="kw">| WHERE</span> log.level <span class="kw">IN</span> (<span class="str">"WARN"</span>, <span class="str">"ERROR"</span>)
+<span class="kw">| STATS</span> event_count = <span class="fn">COUNT</span>(*),
+        top_message  = <span class="fn">TOP</span>(message, 1)
+  <span class="kw">BY</span> host.name
+<span class="kw">| SORT</span> event_count <span class="kw">DESC</span>
+<span class="kw">| LIMIT</span> <span class="str">10</span></div>
+    </div>
+  </div>
+
+  <!-- Results table -->
+  <div class="panel results-panel f4">
+    <div class="panel-header">
+      <div class="panel-dot"></div>
+      <div class="panel-title">Results · 6-hour window</div>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Host</th>
+          <th>Top Error Message</th>
+          <th>Events</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="host-err">dn-11.cluster.local</span></td>
+          <td>sda3 I/O error blk_update_request: critical target error</td>
+          <td><span class="count-high">3,847</span></td>
+        </tr>
+        <tr>
+          <td><span class="host-warn">dn-07.cluster.local</span></td>
+          <td>DataXceiver: disk full — /data/hadoop/disk3 (99.8%)</td>
+          <td><span class="count-mid">1,204</span></td>
+        </tr>
+        <tr>
+          <td><span class="host-warn">dn-14.cluster.local</span></td>
+          <td>DataXceiver: disk full — /data/hadoop/disk3 (99.6%)</td>
+          <td><span class="count-mid">988</span></td>
+        </tr>
+        <tr>
+          <td><span class="host-ok">dn-03.cluster.local</span></td>
+          <td>Slow disk I/O — write latency &gt; 500ms on disk2</td>
+          <td><span class="count-low">47</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="/js/fuckslides.js"></script>
+<script>
+(function(){if(window!==window.top)return;const W=1280,H=720;function f(){var s=Math.min(innerWidth/W,innerHeight/H);document.body.style.transform='scale('+s+')';document.body.style.transformOrigin='0 0';document.body.style.left=((innerWidth-W*s)/2)+'px';document.body.style.top=((innerHeight-H*s)/2)+'px'}f();addEventListener('resize',f)})();
+</script>
+</body>
+</html>
